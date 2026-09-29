@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>67 Espen</title>
+  <meta name="description" content="Six seven. Espen.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232B3FFF'/><text x='50' y='68' font-size='52' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' fill='%23FFD23F'>67</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:wght@500;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #2B3FFF;
+      --blue-deep: #1A27B8;
+      --sun: #FFD23F;
+      --white: #FFFFFF;
+      --ink: #0A0F4D;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    *, *::before, *::after { box-sizing: inherit; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--blue);
+      color: var(--white);
+      font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+    }
+
+    main {
+      width: min(1100px, 100%);
+      padding: 2rem 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: clamp(0.5rem, 3vw, 2.5rem);
+    }
+
+    .digit {
+      font-family: "Bagel Fat One", "Arial Black", Impact, sans-serif;
+      font-size: clamp(6rem, 22vw, 18rem);
+      line-height: 0.8;
+      color: var(--sun);
+      text-shadow: 0.06em 0.06em 0 var(--blue-deep);
+      user-select: none;
+      transition: transform 180ms ease;
+    }
+    .digit.six { justify-self: end; transform: rotate(-8deg); }
+    .digit.seven { justify-self: start; transform: rotate(8deg); }
+
+    body.pumped .digit.six { transform: rotate(-8deg) translateY(-0.12em); }
+    body.pumped .digit.seven { transform: rotate(8deg) translateY(0.12em); }
+    body.pumped-alt .digit.six { transform: rotate(-8deg) translateY(0.12em); }
+    body.pumped-alt .digit.seven { transform: rotate(8deg) translateY(-0.12em); }
+
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .frame {
+      width: clamp(200px, 34vw, 380px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 6px solid var(--sun);
+      box-shadow: 10px 10px 0 var(--blue-deep);
+      background: var(--blue-deep);
+      display: grid;
+      place-items: center;
+    }
+    .frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .frame .fallback {
+      font-family: "Bagel Fat One", "Arial Black", sans-serif;
+      font-size: 3rem;
+      color: var(--sun);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Bagel Fat One", "Arial Black", Impact, sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    button {
+      font: 800 1.1rem/1 "Figtree", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--sun);
+      border: 0;
+      border-radius: 999px;
+      padding: 0.9rem 1.6rem;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--blue-deep);
+      transition: transform 80ms ease, box-shadow 80ms ease;
+    }
+    button:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 var(--blue-deep);
+    }
+    button:focus-visible {
+      outline: 3px solid var(--white);
+      outline-offset: 4px;
+    }
+
+    .count {
+      margin: 0;
+      font-weight: 500;
+      font-size: 1rem;
+      opacity: 0.85;
+      min-height: 1.2em;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "center center"
+          "six seven";
+        row-gap: 1.5rem;
+      }
+      .center { grid-area: center; }
+      .digit.six { grid-area: six; }
+      .digit.seven { grid-area: seven; }
+      .frame { width: min(75vw, 320px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .digit, button { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="digit six" aria-hidden="true">6</span>
+
+    <div class="center">
+      <div class="frame">
+        <img
+          src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWxmamR5bHM2YWV4OHdiNDRvejZxdWptMW13Yzd2d2RlNjNtdnl0ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kMZJErKgZtONJZOQE6/giphy.gif"
+          alt="Six seven GIF"
+          onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fallback',textContent:'67'}))">
+      </div>
+      <h1>Espen</h1>
+      <button type="button" id="say">Say 67</button>
+      <p class="count" id="count" aria-live="polite"></p>
+    </div>
+
+    <span class="digit seven" aria-hidden="true">7</span>
+  </main>
+
+  <script>
+    const btn = document.getElementById('say');
+    const out = document.getElementById('count');
+    let n = 0;
+    let flip = false;
+
+    btn.addEventListener('click', () => {
+      n++;
+      out.textContent = n === 1 ? 'Said 67 once' : `Said 67 ${n} times`;
+      document.body.classList.toggle('pumped', !flip);
+      document.body.classList.toggle('pumped-alt', flip);
+      flip = !flip;
+      clearTimeout(btn._t);
+      btn._t = setTimeout(() => {
+        document.body.classList.remove('pumped', 'pumped-alt');
+      }, 220);
+    });
+  </script>
+</body>
+</html>v
