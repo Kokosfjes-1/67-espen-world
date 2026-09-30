@@ -138,8 +138,52 @@
       .frame { width: min(75vw, 320px); }
     }
 
+    /* ---------- 67 eruption ---------- */
+    #chaos {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 10;
+    }
+    .burst {
+      position: absolute;
+      border-radius: 50%;
+      border: 4px solid var(--sun);
+      box-shadow: 6px 6px 0 var(--blue-deep);
+      object-fit: cover;
+      animation:
+        pop 300ms cubic-bezier(.2, 1.6, .4, 1) both,
+        jitter 90ms infinite alternate,
+        fadeout 600ms ease-in 5.4s forwards;
+    }
+    @keyframes pop {
+      from { scale: 0; }
+      to   { scale: 1; }
+    }
+    @keyframes jitter {
+      from { translate: -6px 4px; rotate: calc(var(--r) - 8deg); }
+      to   { translate: 6px -4px; rotate: calc(var(--r) + 8deg); }
+    }
+    @keyframes fadeout {
+      to { opacity: 0; scale: 0.4; }
+    }
+
+    body.erupting main { animation: quake 70ms infinite; }
+    body.erupting { background: var(--sun); transition: background 150ms; }
+    body.erupting .digit { color: var(--blue); }
+    @keyframes quake {
+      0%   { transform: translate(0, 0) rotate(0); }
+      25%  { transform: translate(-14px, 8px) rotate(-2deg); }
+      50%  { transform: translate(12px, -10px) rotate(2deg); }
+      75%  { transform: translate(-8px, -6px) rotate(-1deg); }
+      100% { transform: translate(10px, 12px) rotate(1deg); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .digit, button { transition: none; }
+      .burst { animation: fadeout 600ms ease-in 5.4s forwards; }
+      body.erupting main { animation: none; }
     }
   </style>
 </head>
@@ -162,15 +206,53 @@
     <span class="digit seven" aria-hidden="true">7</span>
   </main>
 
+  <div id="chaos" aria-hidden="true"></div>
+
   <script>
+    const GIF = document.querySelector('.frame img')?.src ||
+      'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWxmamR5bHM2YWV4OHdiNDRvejZxdWptMW13Yzd2d2RlNjNtdnl0ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kMZJErKgZtONJZOQE6/giphy.gif';
     const btn = document.getElementById('say');
     const out = document.getElementById('count');
+    const chaos = document.getElementById('chaos');
     let n = 0;
     let flip = false;
+    let erupting = false;
+
+    function erupt() {
+      if (erupting) return;
+      erupting = true;
+      document.body.classList.add('erupting');
+      if (navigator.vibrate) navigator.vibrate([67, 40, 67, 40, 67, 40, 670]);
+
+      const total = 67;
+      for (let i = 0; i < total; i++) {
+        setTimeout(() => {
+          const img = document.createElement('img');
+          img.src = GIF;
+          img.alt = '';
+          img.className = 'burst';
+          const size = 70 + Math.random() * 160;
+          img.style.width = img.style.height = size + 'px';
+          img.style.left = (Math.random() * 100) + 'vw';
+          img.style.top = (Math.random() * 100) + 'vh';
+          img.style.marginLeft = img.style.marginTop = (-size / 2) + 'px';
+          img.style.setProperty('--r', (Math.random() * 60 - 30) + 'deg');
+          img.style.animationDelay = `0ms, ${Math.random() * 90}ms, ${5400 - i * 25}ms`;
+          chaos.appendChild(img);
+        }, i * 25);
+      }
+
+      setTimeout(() => {
+        document.body.classList.remove('erupting');
+        chaos.replaceChildren();
+        erupting = false;
+      }, 6200);
+    }
 
     btn.addEventListener('click', () => {
       n++;
       out.textContent = n === 1 ? 'Said 67 once' : `Said 67 ${n} times`;
+      if (n % 67 === 0) erupt();
       document.body.classList.toggle('pumped', !flip);
       document.body.classList.toggle('pumped-alt', flip);
       flip = !flip;
@@ -181,4 +263,4 @@
     });
   </script>
 </body>
-</html>v
+</html>
